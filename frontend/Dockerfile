@@ -1,0 +1,15 @@
+FROM node:slim
+
+ENV HOST=0.0.0.0
+
+WORKDIR /usr/src/app
+
+COPY package.json package-lock.json ./
+
+RUN npm install -g @angular/cli && npm ci
+
+COPY . .
+
+EXPOSE 4200
+
+CMD [ "ng", "serve", "--host", "0.0.0.0" ]
