@@ -1,0 +1,30 @@
+<!-- src/app/content/content.component.html -->
+<h2>Contents</h2>
+
+<ul>
+  @for (content of contents; track content) {
+    <li>
+        <h3>{{ content.title }}</h3>
+        <p>{{ content.body[0].children[0].text }}</p>
+    </li>
+  }
+</ul>
+
+<hr />
+
+<h2>Create New Content</h2>
+<form [formGroup]="contentForm" (ngSubmit)="onSubmit()">
+  <label>
+    Title:
+    <input formControlName="title" />
+  </label>
+  <br />
+
+  <label>
+    Body:
+    <textarea formControlName="body"></textarea>
+  </label>
+  <br />
+
+  <button type="submit">Create</button>
+</form>
