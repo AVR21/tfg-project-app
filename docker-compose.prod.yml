@@ -1,0 +1,45 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    #image: URI
+    ports:
+      - "80:80"
+    networks:
+      - app-bridge
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    #image: URI
+    ports:
+      - "1337:1337"
+    networks:
+      - app-bridge
+    env_file: .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:alpine
+    restart: always
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-bridge
+
+volumes:
+  pgdata:
+
+networks:
+  app-bridge:
+    driver: bridge
