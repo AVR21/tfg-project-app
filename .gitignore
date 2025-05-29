@@ -41,4 +41,6 @@
 */.DS_Store
 */Thumbs.db
 
+*/.strapi-updater.json
+
 .env
