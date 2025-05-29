@@ -36,7 +36,7 @@ export class LoginComponent {
         password: formValue.password,
       }).subscribe(console.log);
     } else {
-      this.authService.register({
+      this.authService.signup({
         username: formValue.username,
         email: formValue.email,
         password: formValue.password,

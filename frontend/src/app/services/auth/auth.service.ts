@@ -11,20 +11,21 @@ export class AuthService {
   private apiUrl = 'http://localhost:1337/api/auth';
   private tokenKey = 'auth_token';
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
-  public user: any | null;
 
   constructor(private http: HttpClient) {}
 
-  register(userData: { username: string; email: string; password: string }): Observable<any> {
+  signup(userData: { username: string; email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/local/register`, userData).pipe(
-      tap((res: any) => this.setToken(res.jwt))
+      tap((res: any) => {
+        this.setToken(res.jwt)
+        localStorage.setItem('userId', res.user.id)
+      })
     );
   }
 
   login(credentials: { identifier: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/local`, credentials).pipe(
       tap((res: any) => {
-        this.user = res;
         this.setToken(res.jwt)
         localStorage.setItem('userId', res.user.id);
       })
@@ -32,7 +33,7 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.tokenKey);
+    localStorage.clear();
     this.isLoggedInSubject.next(false);
   }
 

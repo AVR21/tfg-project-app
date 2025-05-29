@@ -1,0 +1,34 @@
+<div class="modal"
+     id="authModal">
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header flex-column align-items-center">
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <img src="public/favicon.ico"
+          alt="User" class="rounded-circle mb-3"/>
+
+        <nav>
+          <ul class="pagination pagination-lg">
+            <li class="page-item" [class.active]="registerSelection()">
+              <span class="page-link" (click)="changeRegisterSelection(0)">Login</span>
+            </li>
+            <li class="page-item" [class.active]="!registerSelection()">
+              <span class="page-link" (click)="changeRegisterSelection(1)">Register</span>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="modal-body">
+        @if (registerSelection()) {
+          <app-login (success)="updateStatus($event)"/>
+        } @else {
+          <app-signup (success)="updateStatus($event)"/>
+        }
+      </div>
+
+    </div>
+  </div>
+</div>
