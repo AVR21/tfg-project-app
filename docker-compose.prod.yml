@@ -45,3 +45,4 @@ volumes:
 networks:
   app-bridge:
     driver: bridge
+    name: prod_bridge

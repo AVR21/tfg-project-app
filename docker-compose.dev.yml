@@ -50,5 +50,5 @@ volumes:
 
 networks:
   app-bridge:
-    name: app-bridge
     driver: bridge
+    name: dev_bridge
