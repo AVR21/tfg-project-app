@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
 COPY package.json package-lock.json ./
 
 # Instalar dependencias (Strapi + plugins)
-RUN npm install --legacy-peer-deps
+RUN npm install
 
 # Copiar el resto del código fuente
 COPY . .
