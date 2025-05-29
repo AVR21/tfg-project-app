@@ -1,3 +1,4 @@
+name: prod
 services:
   frontend:
     build:
@@ -39,6 +40,7 @@ services:
 
 volumes:
   pgdata:
+    name: app_pgdata
 
 networks:
   app-bridge:

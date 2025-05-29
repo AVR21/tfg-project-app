@@ -1,3 +1,4 @@
+name: dev
 services:
   # frontend:
   #   build:
@@ -18,7 +19,7 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     ports:
       - "1337:1337"
     volumes:
@@ -45,6 +46,7 @@ services:
 
 volumes:
   pgdata:
+    name: app_pgdata
 
 networks:
   app-bridge:
