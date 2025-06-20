@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
+  DO
+  \$\$
+  BEGIN
+      IF NOT EXISTS (
+          SELECT FROM pg_roles WHERE rolname = '$REPLICATION_USER'
+      ) THEN
+          CREATE ROLE $REPLICATION_USER WITH REPLICATION LOGIN ENCRYPTED PASSWORD '$REPLICATION_PASSWORD';
+      END IF;
+  END
+  \$\$;
+EOSQL
