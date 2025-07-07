@@ -1,26 +1,26 @@
-name: prod
+name: passive
 services:
   frontend:
     build:
       context: ../../frontend
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     #image: URI
     ports:
       - "80:80"
     networks:
-      - app-bridge
+      - passive-bridge
     depends_on:
       - backend
 
   backend:
     build:
       context: ../../backend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     #image: URI
     ports:
       - "1337:1337"
     networks:
-      - app-bridge
+      - passive-bridge
     env_file: .env
     depends_on:
       - db-master
@@ -36,13 +36,13 @@ services:
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     volumes:
-      - master_data:/var/lib/postgresql/data
+      - master-pgdata:/var/lib/postgresql/data
       - ./db/master/postgresql.conf:/var/lib/postgresql/postgresql.conf
       - ./db/master/pg_hba.conf:/var/lib/postgresql/pg_hba.conf
       - ./db/master/init-replication.sh:/docker-entrypoint-initdb.d/init-replication.sh
     command: ["postgres", "-c", "config_file=/var/lib/postgresql/postgresql.conf"]
     networks:
-      - app-bridge
+      - passive-bridge
 
   db-replica:
     image: postgres:alpine
@@ -56,17 +56,19 @@ services:
     depends_on:
       - db-master
     volumes:
-      - replica_data:/var/lib/postgresql/data
+      - replica-pgdata:/var/lib/postgresql/data
       - ./db/replica/standby-entrypoint.sh:/docker-entrypoint-initdb.d/standby-entrypoint.sh
     entrypoint: ["sh", "/docker-entrypoint-initdb.d/standby-entrypoint.sh"]
     networks:
-      - app-bridge
+      - passive-bridge
 
 volumes:
-  master_data:
-  replica_data:
+  master-pgdata:
+    name: master_pgdata
+  replica-pgdata:
+    name: replica_pgdata
 
 networks:
-  app-bridge:
+  passive-bridge:
     driver: bridge
-    name: prod_bridge
+    name: passive_bridge

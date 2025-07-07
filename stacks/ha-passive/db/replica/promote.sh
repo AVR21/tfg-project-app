@@ -2,9 +2,9 @@
 
 set -e
 
-REPLICA="prod-db-replica-1"
-MASTER="prod-db-master-1"
-NETWORK="prod_bridge"
+REPLICA="ha-passive-db-replica-1"
+MASTER="ha-passive-db-master-1"
+NETWORK="passive_bridge"
 DATA="/var/lib/postgresql/data"
 
 docker exec -u postgres "$REPLICA" pg_ctl promote -D "$DATA"

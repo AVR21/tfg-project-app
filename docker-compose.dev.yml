@@ -26,7 +26,7 @@ services:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules
     networks:
-      - app-bridge
+      - dev-bridge
     env_file: .env
     depends_on:
       - db
@@ -42,13 +42,13 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
-      - app-bridge
+      - dev-bridge
 
 volumes:
   pgdata:
-    name: app_pgdata
+    name: pgdata
 
 networks:
-  app-bridge:
+  dev-bridge:
     driver: bridge
     name: dev_bridge
