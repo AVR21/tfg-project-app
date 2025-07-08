@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 DATABASE="postgres"
 CONTAINER="${1:-base-db-1}"
 OUT_FILE="${2:-pgdata.backup}"

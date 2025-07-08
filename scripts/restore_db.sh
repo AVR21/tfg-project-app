@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 DATABASE="postgres"
 CONTAINER="${1:-passive-db-master-1}"
 BACKUP_FILE="${2:-pgdata.backup}"
