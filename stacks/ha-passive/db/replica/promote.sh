@@ -2,8 +2,8 @@
 
 set -e
 
-REPLICA="ha-passive-db-replica-1"
-MASTER="ha-passive-db-master-1"
+REPLICA="passive-db-replica-1"
+MASTER="passive-db-master-1"
 NETWORK="passive_bridge"
 DATA="/var/lib/postgresql/data"
 
