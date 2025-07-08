@@ -17,4 +17,7 @@ else
     echo "Directorio de datos ya inicializado, saltando basebackup"
 fi
 
+echo "Ejecución de vigilancia (watchdog) de contenedor Master"
+/usr/local/bin/runner.sh &
+
 exec docker-entrypoint.sh postgres
