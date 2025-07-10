@@ -1,5 +1,5 @@
 
-FROM node:slim AS build
+FROM node:lts-alpine AS build
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ COPY . .
 
 RUN npm run build
 
-FROM node:slim
+FROM node:lts-alpine
 
 WORKDIR /app
 
