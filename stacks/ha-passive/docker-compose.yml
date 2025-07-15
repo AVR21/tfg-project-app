@@ -55,9 +55,7 @@ services:
       - db-master
     volumes:
       - replica-pgdata:/var/lib/postgresql/data
-      - ./db/replica/promote.sh:/usr/local/bin/promote.sh
       - ./db/replica/watchdog.sh:/usr/local/bin/watchdog.sh
-      - ./db/replica/runner.sh:/usr/local/bin/runner.sh
       - ./db/replica/standby-entrypoint.sh:/docker-entrypoint-initdb.d/standby-entrypoint.sh
     entrypoint: ["sh", "/docker-entrypoint-initdb.d/standby-entrypoint.sh"]
     networks:
