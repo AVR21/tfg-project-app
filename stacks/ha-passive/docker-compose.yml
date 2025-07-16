@@ -1,10 +1,7 @@
 name: passive
 services:
   frontend:
-    build:
-      context: ../../frontend
-      dockerfile: Dockerfile
-    #image: URI
+    image: avr21/frontend
     ports:
       - "80:80"
     networks:
@@ -13,10 +10,7 @@ services:
       - backend
 
   backend:
-    build:
-      context: ../../backend
-      dockerfile: Dockerfile
-    #image: URI
+    image: avr21/tfg-backend
     ports:
       - "1337:1337"
     networks:
