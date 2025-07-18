@@ -8,7 +8,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:1337/api/auth';
+  private apiUrl = `http://${window.location.hostname}:1337/api/auth`;
   private tokenKey = 'auth_token';
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
 
