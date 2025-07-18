@@ -16,6 +16,9 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 COPY --from=build /app ./
+COPY ./certs/eu-west-1-bundle.pem ./certs/eu-west-1-bundle.pem
+
+RUN chmod 644 ./certs/eu-west-1-bundle.pem
 
 EXPOSE 1337
 
