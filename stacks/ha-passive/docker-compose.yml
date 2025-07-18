@@ -20,7 +20,7 @@ services:
       - db-proxy
 
   db-master:
-    image: postgres:alpine
+    image: avr21/tfg-db-master
     restart: always
     env_file: .env
     environment:
@@ -29,15 +29,15 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     volumes:
       - master-pgdata:/var/lib/postgresql/data
-      - ./db/master/postgresql.conf:/var/lib/postgresql/postgresql.conf
-      - ./db/master/pg_hba.conf:/var/lib/postgresql/pg_hba.conf
-      - ./db/master/init-replication.sh:/docker-entrypoint-initdb.d/init-replication.sh
-    command: ["postgres", "-c", "config_file=/var/lib/postgresql/postgresql.conf"]
+    #  - ./db/master/postgresql.conf:/var/lib/postgresql/postgresql.conf
+    #  - ./db/master/pg_hba.conf:/var/lib/postgresql/pg_hba.conf
+    #  - ./db/master/init-replication.sh:/docker-entrypoint-initdb.d/init-replication.sh
+    #command: ["postgres", "-c", "config_file=/var/lib/postgresql/postgresql.conf"]
     networks:
       - passive-bridge
 
   db-replica:
-    image: postgres:alpine
+    image: avr21/tfg-db-replica
     restart: always
     env_file: .env
     environment:
@@ -49,22 +49,22 @@ services:
       - db-master
     volumes:
       - replica-pgdata:/var/lib/postgresql/data
-      - ./db/replica/watchdog.sh:/usr/local/bin/watchdog.sh
-      - ./db/replica/standby-entrypoint.sh:/docker-entrypoint-initdb.d/standby-entrypoint.sh
-    entrypoint: ["sh", "/docker-entrypoint-initdb.d/standby-entrypoint.sh"]
+    #  - ./db/replica/watchdog.sh:/usr/local/bin/watchdog.sh
+    #  - ./db/replica/standby-entrypoint.sh:/docker-entrypoint-initdb.d/standby-entrypoint.sh
+    #entrypoint: ["sh", "/docker-entrypoint-initdb.d/standby-entrypoint.sh"]
     networks:
       - passive-bridge
 
   db-proxy:
-    image: haproxy:alpine
+    image: avr21/tfg-db-proxy
     container_name: passive-db-proxy
     ports:
       - "5432:5432"
     depends_on:
       - db-master
       - db-replica
-    volumes:
-      - ./db/proxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    #volumes:
+    #  - ./db/proxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
     networks:
       - passive-bridge
 
