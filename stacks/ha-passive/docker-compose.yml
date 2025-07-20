@@ -2,6 +2,7 @@ name: passive
 services:
   frontend:
     image: avr21/tfg-frontend
+    restart: always
     ports:
       - "80:80"
     networks:
@@ -11,6 +12,7 @@ services:
 
   backend:
     image: avr21/tfg-backend
+    restart: always
     ports:
       - "1337:1337"
     networks:
@@ -29,10 +31,6 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     volumes:
       - master-pgdata:/var/lib/postgresql/data
-    #  - ./db/master/postgresql.conf:/var/lib/postgresql/postgresql.conf
-    #  - ./db/master/pg_hba.conf:/var/lib/postgresql/pg_hba.conf
-    #  - ./db/master/init-replication.sh:/docker-entrypoint-initdb.d/init-replication.sh
-    #command: ["postgres", "-c", "config_file=/var/lib/postgresql/postgresql.conf"]
     networks:
       - passive-bridge
 
@@ -49,9 +47,6 @@ services:
       - db-master
     volumes:
       - replica-pgdata:/var/lib/postgresql/data
-    #  - ./db/replica/watchdog.sh:/usr/local/bin/watchdog.sh
-    #  - ./db/replica/standby-entrypoint.sh:/docker-entrypoint-initdb.d/standby-entrypoint.sh
-    #entrypoint: ["sh", "/docker-entrypoint-initdb.d/standby-entrypoint.sh"]
     networks:
       - passive-bridge
 
@@ -63,8 +58,6 @@ services:
     depends_on:
       - db-master
       - db-replica
-    #volumes:
-    #  - ./db/proxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
     networks:
       - passive-bridge
 

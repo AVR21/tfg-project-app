@@ -2,6 +2,7 @@ name: base
 services:
   frontend:
     image: avr21/tfg-frontend
+    restart: always
     ports:
       - "80:80"
     networks:
@@ -11,6 +12,7 @@ services:
 
   backend:
     image: avr21/tfg-backend
+    restart: always
     ports:
       - "1337:1337"
     networks:
