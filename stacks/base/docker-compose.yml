@@ -22,7 +22,7 @@ services:
       - db
 
   db:
-    image: postgres:alpine
+    image: avr21/tfg-db-base
     restart: always
     env_file: .env
     environment:
