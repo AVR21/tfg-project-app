@@ -33,6 +33,11 @@ services:
       - pgdata:/var/lib/postgresql/data
     networks:
       - base-bridge
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 400M
 
 volumes:
   pgdata:
