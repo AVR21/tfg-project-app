@@ -1,30 +1,12 @@
 <!-- src/app/content/content.component.html -->
-<h2>Contents</h2>
-
-<ul>
-  @for (content of contents; track content) {
-    <li>
-        <h3>{{ content.title }}</h3>
-        <p>{{ content.body[0].children[0].text }}</p>
-    </li>
-  }
-</ul>
+<h2>Games + Company</h2>
 
 <hr />
 
-<h2>Create New Content</h2>
-<form [formGroup]="contentForm" (ngSubmit)="onSubmit()">
-  <label>
-    Title:
-    <input formControlName="title" />
-  </label>
-  <br />
+<br>
 
-  <label>
-    Body:
-    <textarea formControlName="body"></textarea>
-  </label>
-  <br />
+<button (click)="seedGames()">Llenar base de datos con Juegos</button>
 
-  <button type="submit">Create</button>
-</form>
+<br>
+
+<button (click)="seedCompanies()">Llenar base de datos con Compañías</button>

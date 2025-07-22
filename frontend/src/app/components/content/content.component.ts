@@ -30,7 +30,7 @@ export class ContentComponent implements OnInit {
 }
 
   ngOnInit(): void {
-    this.loadContents();
+    //this.loadContents();
   }
 
   loadContents() {
@@ -52,7 +52,86 @@ export class ContentComponent implements OnInit {
 
     this.contentService.createContent(newContent).subscribe(() => {
       this.contentForm.reset();
-      this.loadContents(); // Refresh list
+      this.loadContents();
     });
   }
+
+  async seedGames({total = 1000, batchSize = 1000, delayMs = 1000} = {}) {
+  const token = this.authService.getToken();
+
+  for (let i = 0; i < total; i += batchSize) {
+    const currentBatch = Array.from({ length: batchSize }, (_, j) => i + j)
+      .filter(index => index < total)
+      .map(index => {
+        return fetch('http://localhost:1337/api/games', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            data: {
+              title: `Juego ${index}`,
+              body: `Descripción del juego ${index}`,
+              score: Math.floor(Math.random() * 10)
+            }
+          })
+        }).then(async res => {
+          if (!res.ok) {
+            const errorText = await res.text();
+            console.error(`Error creando juego ${index}:`, errorText);
+          } else {
+            console.log(`Juego ${index} creado correctamente`);
+          }
+        }).catch(err => {
+          console.error(`Fallo en fetch para juego ${index}:`, err.message);
+        });
+      });
+
+    await Promise.all(currentBatch);
+    console.log(`Esperando ${delayMs} ms antes del siguiente lote...`);
+    await new Promise(r => setTimeout(r, delayMs));
+  }
+
+  console.log('Seeding completado.');
+}
+
+async seedCompanies({total = 100, batchSize = 100, delayMs = 1000} = {}) {
+  const token = this.authService.getToken();
+
+  for (let i = 0; i < total; i += batchSize) {
+    const currentBatch = Array.from({ length: batchSize }, (_, j) => i + j)
+      .filter(index => index < total)
+      .map(index => {
+        return fetch('http://localhost:1337/api/companies', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            data: {
+              name: `Company - ${index}`
+            }
+          })
+        }).then(async res => {
+          if (!res.ok) {
+            const errorText = await res.text();
+            console.error(`Error creando compañía ${index}:`, errorText);
+          } else {
+            console.log(`Compañía ${index} creado correctamente`);
+          }
+        }).catch(err => {
+          console.error(`Fallo en fetch para compañía ${index}:`, err.message);
+        });
+      });
+
+    await Promise.all(currentBatch);
+    console.log(`Esperando ${delayMs} ms antes del siguiente lote...`);
+    await new Promise(r => setTimeout(r, delayMs));
+  }
+
+  console.log('Seeding completado.');
+}
+
 }
