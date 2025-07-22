@@ -32,7 +32,7 @@ services:
       - db
 
   db:
-    image: postgres:alpine
+    image: avr21/tfg-db-base
     restart: always
     env_file: .env #TODO - Set up github secret token
     environment:
