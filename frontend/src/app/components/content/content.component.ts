@@ -63,7 +63,7 @@ export class ContentComponent implements OnInit {
     const currentBatch = Array.from({ length: batchSize }, (_, j) => i + j)
       .filter(index => index < total)
       .map(index => {
-        return fetch('http://localhost:1337/api/games', {
+        return fetch(`http://${window.location.hostname}:1337/api/games`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ async seedCompanies({total = 100, batchSize = 100, delayMs = 1000} = {}) {
     const currentBatch = Array.from({ length: batchSize }, (_, j) => i + j)
       .filter(index => index < total)
       .map(index => {
-        return fetch('http://localhost:1337/api/companies', {
+        return fetch(`http://${window.location.hostname}:1337/api/companies`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
