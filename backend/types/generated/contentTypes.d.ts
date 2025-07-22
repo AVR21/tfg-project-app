@@ -407,6 +407,7 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
 export interface ApiGameGame extends Struct.CollectionTypeSchema {
   collectionName: 'games';
   info: {
+    description: '';
     displayName: 'Game';
     pluralName: 'games';
     singularName: 'game';
@@ -415,9 +416,7 @@ export interface ApiGameGame extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    body: Schema.Attribute.Text &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+    body: Schema.Attribute.Text & Schema.Attribute.Required;
     company: Schema.Attribute.Relation<'manyToOne', 'api::company.company'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -428,7 +427,6 @@ export interface ApiGameGame extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     score: Schema.Attribute.Decimal &
       Schema.Attribute.Required &
-      Schema.Attribute.Unique &
       Schema.Attribute.DefaultTo<0>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &

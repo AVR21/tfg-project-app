@@ -4,7 +4,8 @@
   "info": {
     "singularName": "game",
     "pluralName": "games",
-    "displayName": "Game"
+    "displayName": "Game",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -17,11 +18,11 @@
     },
     "body": {
       "type": "text",
-      "unique": true,
+      "unique": false,
       "required": true
     },
     "score": {
-      "unique": true,
+      "unique": false,
       "required": true,
       "default": 0,
       "type": "decimal"
