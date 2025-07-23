@@ -15,6 +15,15 @@ jobs:
       - name: Build tfg-db-base image
         run: docker build ./stacks/base/db --tag ${{ secrets.DOCKER_BASE_DB_REPO }}
 
+      - name: Build tfg-db-master image
+        run: docker build ./stacks/ha-passive/db/master --tag avr21/tfg-db-master
+      
+      - name: Build tfg-db-replica image
+        run: docker build ./stacks/ha-passive/db/replica --tag avr21/tfg-db-replica
+      
+      - name: Build tfg-db-proxy image
+        run: docker build ./stacks/ha-passive/db/master --tag avr21/tfg-db-proxy
+      
       - name: Docker Hub login
         uses: docker/login-action@v3
         with:
