@@ -33,6 +33,11 @@ services:
       - master-pgdata:/var/lib/postgresql/data
     networks:
       - passive-bridge
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 400M
 
   db-replica:
     image: avr21/tfg-db-replica
@@ -49,6 +54,11 @@ services:
       - replica-pgdata:/var/lib/postgresql/data
     networks:
       - passive-bridge
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 400M
 
   db-proxy:
     image: avr21/tfg-db-proxy
