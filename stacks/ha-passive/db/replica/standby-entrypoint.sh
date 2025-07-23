@@ -20,4 +20,4 @@ fi
 echo "Ejecución de vigilancia (watchdog) de contenedor Master"
 /usr/local/bin/watchdog.sh &
 
-exec docker-entrypoint.sh postgres
+exec docker-entrypoint.sh postgres -c config_file=/var/lib/postgresql/postgresql.conf
