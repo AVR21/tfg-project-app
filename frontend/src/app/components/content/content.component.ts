@@ -56,7 +56,7 @@ export class ContentComponent implements OnInit {
     });
   }
 
-  async seedGames({total = 1000, batchSize = 1000, delayMs = 1000} = {}) {
+  async seedGames({total = 1000000, batchSize = 10000, delayMs = 1000} = {}) {
   const token = this.authService.getToken();
 
   for (let i = 0; i < total; i += batchSize) {
@@ -96,7 +96,7 @@ export class ContentComponent implements OnInit {
   console.log('Seeding completado.');
 }
 
-async seedCompanies({total = 100, batchSize = 100, delayMs = 1000} = {}) {
+async seedCompanies({total = 500, batchSize = 10, delayMs = 1000} = {}) {
   const token = this.authService.getToken();
 
   for (let i = 0; i < total; i += batchSize) {
