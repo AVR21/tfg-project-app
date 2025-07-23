@@ -16,7 +16,7 @@ while [ ! -f "$FLAG" ]; do
         fi
 
         echo "[$(date +%F"|"%T)] Sin respuesta de contenedor '$MASTER' (intento: $((i+1)))." >> "$LOG"
-        sleep 5
+        sleep 3
         i=$((i+1))
     done
 
@@ -27,8 +27,6 @@ while [ ! -f "$FLAG" ]; do
         echo "[$(date +%F"|"%T)] Promoción completada." >> "$LOG"
         break
     fi
-
-    sleep 2
 done
 
 echo "[$(date +%F"|"%T)] Promoción realizada, fin de proceso de vigilancia."
