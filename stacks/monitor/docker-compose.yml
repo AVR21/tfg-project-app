@@ -1,14 +1,22 @@
 name: monitor
 
 services:
-  postgres-exporter:
-    container_name: postgres-exporter
+  postgres-exporter-base:
+    container_name: postgres-exporter-base
     image: quay.io/prometheuscommunity/postgres-exporter:latest
     environment:
-      - DATA_SOURCE_NAME=postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME?sslmode=disable
+      - DATA_SOURCE_NAME=postgresql://$BASE_DB_USER:$BASE_DB_PASSWORD@$BASE_DB_HOST:$BASE_DB_PORT/$BASE_DB_NAME?sslmode=disable
     networks:
       - monitor-net
   
+  postgres-exporter-ha:
+    container_name: postgres-exporter-ha
+    image: quay.io/prometheuscommunity/postgres-exporter:latest
+    environment:
+      - DATA_SOURCE_NAME=postgresql://$HA_DB_USER:$HA_DB_PASSWORD@$HA_DB_HOST:$HA_DB_PORT/$HA_DB_NAME?sslmode=disable
+    networks:
+      - monitor-net
+
   prometheus:
     container_name: prometheus
     image: avr21/tfg-prometheus
@@ -37,5 +45,5 @@ volumes:
 
 networks:
   monitor-net:
-    external: true
-    name: ${DB_NETWORK}
+    driver: bridge
+    name: monitor-net
